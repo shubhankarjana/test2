@@ -1,42 +1,17 @@
-name: Node.js CI
+name: Hello World Workflow
 
 on:
   push:
-    branches: [ "main" ]
+    branches:
+      - main # Triggers on pushes to the 'main' branch
 
 jobs:
   build:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-latest # Specifies the runner environment
 
     steps:
-    - uses: actions/checkout@v4
+      - name: Checkout repository
+        uses: actions/checkout@v4 # Action to checkout the repository code
 
-    - name: Use Node.js
-      uses: actions/setup-node@v3
-      with:
-        node-version: 18   # or 20 depending on your project
-
-    - name: Install dependencies
-      run: |
-        if [ -f package-lock.json ]; then
-          npm ci
-        else
-          npm install
-        fi
-
-    - name: Debug - List files before build
-      run: ls -R
-
-    - name: Build project
-      run: npm run build --if-present --verbose
-
-    - name: Debug - List files after build
-      if: always()
-      run: ls -R
-
-    - name: Upload dist folder
-      if: success() && github.ref == 'refs/heads/main'
-      uses: actions/upload-artifact@v4
-      with:
-        name: Build
-        path: dist
+      - name: Print Hello World
+        run: echo "Hello, GitHub Actions World!" # Executes a shell command
